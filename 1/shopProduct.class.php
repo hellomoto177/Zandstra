@@ -3,26 +3,48 @@ class ShopProduct {
 	public $title = '';
 	public $producer = '';
 	public $price = '';
-	public $numPages = '';
-	public $playLength = '';
-	public $summartLine = '';
+	
+	public function __construct($title, $producer, $price) {
+		$this->title = $title;
+		$this->producer = $producer;
+		$this->price = $price;
+	}
 
 	public function getSummaryLine() {
-		if($this instanceOf Book) {
-			$title = $this->title;
-			$producer = $this->producer;
-			$numPages = $this->numPages;
-			print("Название: $title\nСоздатель: $producer\nКоличество страниц: $numPages\n");
-		}
+		print('Название: ' . $this->title . "\n");
+		print('Создатель: ' . $this->producer . "\n");
+		print('Цена: ' . $this->price . "\n");
+	}
+}
 
-		elseif($this instanceOf Cd) {
-			$title = $this->title;
-			$producer = $this->producer;
-			$playLength = $this->playLength;
-			print("Название: $title\nСоздатель: $producer\nПродолжительность: $playLength\n");
-		}
-		else
-			print('Error');
+class Book extends ShopProduct {
+	public $numPages = '';
+
+	public function __construct($title, $producer, $price, $numPages) {
+		parent::__construct($title, $producer, $price);
+		$this->numPages = $numPages;
+	}
+
+	public function getSummaryLine() {
+		$res = parent::getSummaryLine();
+		$res .= 'Количество страниц: ' . $this->numPages . "\n";
+		print($res);
+	}
+
+}
+
+class Cd extends ShopProduct {
+	public $playLength = '';
+
+	public function __construct($title, $producer, $price, $playLength) {
+		parent::__construct($title, $producer, $price);
+		$this->playLength = $playLength;
+	}
+
+	public function getSummaryLine() {
+		$res = parent::getSummaryLine();
+		$res .= 'Продолжительность: ' . $this->playLength . "\n";
+		print($res);
 	}
 }
 
@@ -32,23 +54,7 @@ class ShopProductWriter {
 	}
 }
 
-class Book extends ShopProduct {
-	public function __construct($title, $producer, $price, $numPages) {
-		$this->title = $title;
-		$this->producer = $producer;
-		$this->price = $price;
-		$this->numPages = $numPages;
-	}
-}
-
-class Cd extends ShopProduct {
-	public function __construct($title, $producer, $price, $playLength) {
-		$this->title = $title;
-		$this->producer = $producer;
-		$this->price = $price;
-		$this->playLength = $playLength;
-	}
-}
+/* КЛИЕНТСКИЙ КОД */
 
 $book = new Book('Мастер и Маргарита',
 			   'Булгаков',
@@ -60,7 +66,7 @@ $cd = new Cd('Звездные войны',
 			   '2199',
 			   '90');
 
-// $book->getSummaryLine();
+$book->getSummaryLine();
 $cd->getSummaryLine();
 // $writer = new ShopProductWriter();
 // $writer->write($product);
