@@ -2,7 +2,8 @@
 class ShopProduct {
 	public $title = '';
 	public $producer = '';
-	public $price = '';
+	protected $price = '';
+	public $discount = '';
 	
 	public function __construct($title, $producer, $price) {
 		$this->title = $title;
@@ -14,6 +15,13 @@ class ShopProduct {
 		print('Название: ' . $this->title . "\n");
 		print('Создатель: ' . $this->producer . "\n");
 		print('Цена: ' . $this->price . "\n");
+	}
+
+	public function getPrice() {
+		if($this->discount > 0)
+			print($this->price - ($this->price/100*$this->discount));
+		else
+			print($this->price);
 	}
 }
 
@@ -58,7 +66,7 @@ class ShopProductWriter {
 
 $book = new Book('Мастер и Маргарита',
 			   'Булгаков',
-			   '499',
+			   '500',
 			   '350');
 
 $cd = new Cd('Звездные войны',
@@ -66,8 +74,14 @@ $cd = new Cd('Звездные войны',
 			   '2199',
 			   '90');
 
-$book->getSummaryLine();
+
+// $book->getSummaryLine();
+// $book->discount = '5';
+// $book->getPrice();
+
 $cd->getSummaryLine();
+$cd->discount = '50';
+$cd->getPrice();
 // $writer = new ShopProductWriter();
 // $writer->write($product);
 ?>
